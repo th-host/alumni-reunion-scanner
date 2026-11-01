@@ -5,26 +5,204 @@
 <title>The New College Alumni Reunion – Newphoria Check-in</title>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <style>
-:root{--maroon:#6b1830;--gold:#c9a45c;--ink:#28232a;--muted:#716b70;--bg:#f7f3f4}*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:var(--bg);color:var(--ink);max-width:620px;margin:0 auto;padding:16px}.brand{text-align:center;background:linear-gradient(135deg,#541226,#7c2942);color:white;border-radius:18px;padding:22px 16px;margin-bottom:16px}.logos{display:flex;justify-content:center;align-items:center;gap:18px;margin-bottom:12px}.logo{width:62px;height:62px;border:2px solid #e2c98f;border-radius:50%;display:grid;place-items:center;font-weight:bold;font-size:12px;color:#fff;text-align:center;padding:5px}.brand h1{font-size:22px;margin:8px 0}.brand p{margin:5px 0;color:#f2e7e9}.card{background:white;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 3px 14px #32101a12}h2{font-size:18px;color:var(--maroon);margin:0 0 12px}#reader{width:100%;max-width:440px;margin:auto}button{border:0;border-radius:9px;background:var(--maroon);color:white;padding:12px 15px;font-size:15px;font-weight:600;cursor:pointer;margin:5px 4px 5px 0}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:#eee7e9;color:var(--maroon)}.green{background:#18794e}.gold{background:#a87822}.row{display:flex;gap:8px;flex-wrap:wrap}.row button{flex:1}label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}input{width:100%;padding:12px;border:1px solid #d8cdd1;border-radius:8px;font-size:16px}#status{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f1f2;border-radius:9px;padding:13px;margin-top:10px;font-size:14px;line-height:1.5}.pill{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#f8e9e9;color:#a32332}.paid{background:#e4f4eb;color:#176b42}.amount{font-size:30px;color:var(--maroon);font-weight:bold;margin:5px 0}.upi{font-size:19px;font-weight:bold;color:var(--maroon)}.payqr{display:block;width:190px;height:190px;object-fit:contain;margin:12px auto}.hint{font-size:12px;color:var(--muted);line-height:1.5}.hidden{display:none}.details p{margin:7px 0;font-size:14px}.details b{color:#51434a}
-</style></head>
+:root{--maroon:#6b1830;--gold:#c9a45c;--ink:#28232a;--muted:#716b70;--bg:#f7f3f4}
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--ink);max-width:620px;margin:0 auto;padding:16px}
+.brand{text-align:center;background:linear-gradient(135deg,#541226,#7c2942);color:white;border-radius:18px;padding:22px 16px;margin-bottom:16px}
+.logos{display:flex;justify-content:center;align-items:center;gap:18px;margin-bottom:12px;flex-wrap:wrap}
+.logo{width:88px;height:88px;object-fit:contain;background:#fff;border:2px solid #e2c98f;border-radius:12px;padding:6px;display:block}
+.brand h1{font-size:22px;margin:8px 0}
+.brand p{margin:5px 0;color:#f2e7e9}
+.card{background:white;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 3px 14px #32101a12}
+h2{font-size:18px;color:var(--maroon);margin:0 0 12px}
+#reader{width:100%;max-width:440px;margin:auto}
+button{border:0;border-radius:9px;background:var(--maroon);color:white;padding:12px 15px;font-size:15px;font-weight:600;cursor:pointer;margin:5px 4px 5px 0}
+button:disabled{opacity:.45;cursor:not-allowed}
+.secondary{background:#eee7e9;color:var(--maroon)}
+.green{background:#18794e}
+.gold{background:#a87822}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row button{flex:1}
+label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}
+input{width:100%;padding:12px;border:1px solid #d8cdd1;border-radius:8px;font-size:16px}
+#status{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f1f2;border-radius:9px;padding:13px;margin-top:10px;font-size:14px;line-height:1.5}
+.pill{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#f8e9e9;color:#a32332}
+.paid{background:#e4f4eb;color:#176b42}
+.amount{font-size:30px;color:var(--maroon);font-weight:bold;margin:5px 0}
+.upi{font-size:19px;font-weight:bold;color:var(--maroon)}
+.payqr{display:block;width:190px;height:190px;object-fit:contain;margin:12px auto}
+.hint{font-size:12px;color:var(--muted);line-height:1.5}
+.hidden{display:none}
+.details p{margin:7px 0;font-size:14px}
+.details b{color:#51434a}
+.logo-error{font-size:11px;color:#fff;margin-top:4px}
+</style>
+</head>
 <body>
-<header class="brand"><div class="logos"><div class="logo">NCAA<br>ALUMNI</div><div class="logo">NEW<br>PHORIA</div></div><h1>NEW COLLEGE ALUMNI ASSOCIATION</h1><p>NEWPHORIA</p><p>28 November 2026</p></header>
-<section class="card"><h2>Alumni QR Scanner</h2><div id="reader"></div><div class="row"><button id="startBtn">Start Scanner</button><button id="stopBtn" class="secondary">Stop Scanner</button></div><div id="status" role="status" aria-live="polite">Ready to scan an alumni QR pass.</div></section>
-<section id="alumniCard" class="card hidden"><h2>Alumni Details</h2><div id="details" class="details"></div><p>Payment status: <span id="paymentBadge" class="pill">NOT PAID</span></p></section>
-<section id="paymentCard" class="card hidden"><h2>Spot UPI Payment</h2><div class="amount">₹200</div><p class="hint">UPI only · No cash accepted</p><img class="payqr" src="upi-payment-200.png" alt="₹200 UPI payment QR"><p class="upi">ncaa@iob</p><button type="button" class="secondary" id="copyUpi">Copy UPI ID</button><p class="hint">Ask the alumnus to pay ₹200. Staff must verify that the payment is credited to the college account before confirming.</p><label for="reference">UPI transaction ID / UTR reference</label><input id="reference" placeholder="Enter verified UPI reference" autocomplete="off"><label for="staffPin">Staff PIN</label><input id="staffPin" type="password" placeholder="Enter staff PIN" autocomplete="off"><button id="confirmPayment" class="gold">Confirm Verified Payment</button></section>
-<section id="checkinCard" class="card hidden"><h2>Attendance</h2><button id="checkinBtn" class="green" disabled>Complete Check-in</button><p class="hint" id="checkinHint">Check-in remains locked until payment is marked PAID and a reference is saved.</p></section>
+<header class="brand">
+  <div class="logos">
+    <img class="logo" src="alumni-logo.png" alt="The New College Alumni Association logo"
+         onerror="this.style.display='none';document.getElementById('alumniLogoError').style.display='block'">
+    <img class="logo" src="newphoria-logo.png" alt="Newphoria logo"
+         onerror="this.style.display='none';document.getElementById('newphoriaLogoError').style.display='block'">
+  </div>
+  <div class="logo-error" id="alumniLogoError" style="display:none">Alumni logo not loaded — check alumni-logo.png</div>
+  <div class="logo-error" id="newphoriaLogoError" style="display:none">Newphoria logo not loaded — check newphoria-logo.png</div>
+  <h1>NEW COLLEGE ALUMNI ASSOCIATION</h1>
+  <p>NEWPHORIA</p>
+  <p>28 November 2026</p>
+</header>
+
+<section class="card">
+  <h2>Alumni QR Scanner</h2>
+  <div id="reader"></div>
+  <div class="row">
+    <button id="startBtn">Start Scanner</button>
+    <button id="stopBtn" class="secondary">Stop Scanner</button>
+  </div>
+  <div id="status" role="status" aria-live="polite">Ready to scan an alumni QR pass.</div>
+</section>
+
+<section id="alumniCard" class="card hidden">
+  <h2>Alumni Details</h2>
+  <div id="details" class="details"></div>
+  <p>Payment status: <span id="paymentBadge" class="pill">NOT PAID</span></p>
+</section>
+
+<section id="paymentCard" class="card hidden">
+  <h2>Spot UPI Payment</h2>
+  <div class="amount">₹200</div>
+  <p class="hint">UPI only · No cash accepted</p>
+  <img class="payqr" src="upi-payment-200.png" alt="₹200 UPI payment QR">
+  <p class="upi">ncaa@iob</p>
+  <button type="button" class="secondary" id="copyUpi">Copy UPI ID</button>
+  <p class="hint">Ask the alumnus to pay ₹200. Staff must verify that the payment is credited to the college account before confirming.</p>
+  <label for="reference">UPI transaction ID / UTR reference</label>
+  <input id="reference" placeholder="Enter verified UPI reference" autocomplete="off">
+  <label for="staffPin">Staff PIN</label>
+  <input id="staffPin" type="password" placeholder="Enter staff PIN" autocomplete="off">
+  <button id="confirmPayment" class="gold">Confirm Verified Payment</button>
+</section>
+
+<section id="checkinCard" class="card hidden">
+  <h2>Attendance</h2>
+  <button id="checkinBtn" class="green" disabled>Complete Check-in</button>
+  <p class="hint" id="checkinHint">Check-in remains locked until payment is marked PAID and a reference is saved.</p>
+</section>
+
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbywz8qKlbYMhJSmReuPYzV_trUIQzFGJNLh6mRnvz-M2w8u1QS9r7_vQqd8Jf461S2nTg/exec";
 let scanner=null,busy=false,currentToken="",currentAlumnus=null;
-const $=id=>document.getElementById(id);function show(t){$('status').textContent=t}
-function api(action,params={}){return new Promise((resolve,reject)=>{const cb='alumniApi_'+Date.now()+'_'+Math.random().toString(36).slice(2);const s=document.createElement('script');let done=false;const timer=setTimeout(()=>finish(new Error('Server timeout. Check Apps Script deployment.')),20000);function finish(err,data){if(done)return;done=true;clearTimeout(timer);delete window[cb];s.remove();err?reject(err):resolve(data)}window[cb]=data=>finish(null,data);s.onerror=()=>finish(new Error('Cannot reach Apps Script. Check URL and deployment access.'));const q=new URLSearchParams({action,callback:cb,...params});s.src=API_URL+'?'+q.toString();document.body.appendChild(s)})}
-function renderAlumnus(d){currentAlumnus=d;$('alumniCard').classList.remove('hidden');$('paymentCard').classList.toggle('hidden',String(d.payment).toLowerCase()==='yes'&&!!d.transaction);$('checkinCard').classList.remove('hidden');$('details').innerHTML=`<p><b>Name:</b> ${esc(d.name)}</p><p><b>Alumni ID:</b> ${esc(d.id)}</p><p><b>Course:</b> ${esc(d.course||'')}</p><p><b>Year:</b> ${esc(d.year||'')}</p>`;const paid=String(d.payment).toLowerCase()==='yes'&&!!d.transaction;$('paymentBadge').textContent=paid?'PAID':'NOT PAID';$('paymentBadge').className=paid?'pill paid':'pill';$('checkinBtn').disabled=!paid;$('checkinHint').textContent=paid?'Payment recorded. Verify it in the sheet, then complete check-in.':'Check-in locked until payment is confirmed.';if(paid){$('reference').value=d.transaction;$('paymentCard').classList.add('hidden')}else{$('reference').value='';$('paymentCard').classList.remove('hidden')}}
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-async function onScan(decoded){if(busy)return;busy=true;currentToken=decoded;try{if(scanner&&scanner.isScanning)await scanner.pause(true);show('QR detected. Retrieving alumni details...');const d=await api('lookup',{token:decoded});if(!d.ok){show(d.message||'Alumnus not found.');resetScanner();return}renderAlumnus(d);show('Alumnus found. Check payment status below.')}catch(e){show(e.message)}finally{busy=false;if(scanner&&scanner.isScanning){try{scanner.resume()}catch(e){}}}}
-function resetScanner(){busy=false;if(scanner&&scanner.isScanning){try{scanner.resume()}catch(e){}}}
-$('startBtn').onclick=async()=>{try{if(!scanner)scanner=new Html5Qrcode('reader');$('startBtn').disabled=true;show('Starting camera...');await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:230,height:230}},onScan,()=>{});show('Camera ready. Scan an alumni QR pass.')}catch(e){show('Scanner error: '+e.message)}finally{$('startBtn').disabled=false}};
-$('stopBtn').onclick=async()=>{try{if(scanner&&scanner.isScanning)await scanner.stop();show('Scanner stopped.')}catch(e){show(e.message)}};
-$('copyUpi').onclick=async()=>{try{await navigator.clipboard.writeText('ncaa@iob');show('UPI ID copied: ncaa@iob')}catch(e){show('UPI ID: ncaa@iob')}};
-$('confirmPayment').onclick=async()=>{if(!currentToken)return;const reference=$('reference').value.trim(),pin=$('staffPin').value;if(!reference||!pin){show('Enter the verified UPI reference and staff PIN.');return}if(!confirm('Have you verified the ₹200 payment credit in the college UPI account?'))return;$('confirmPayment').disabled=true;try{const d=await api('payment',{token:currentToken,reference,pin});if(!d.ok){show(d.message);return}const updated=await api('lookup',{token:currentToken});renderAlumnus(updated);show('Payment marked PAID. Reference: '+d.transaction+'. You may now complete check-in.')}catch(e){show(e.message)}finally{$('confirmPayment').disabled=false}};
-$('checkinBtn').onclick=async()=>{if(!currentToken||$('checkinBtn').disabled)return;if(!confirm('Confirm this alumnus has paid ₹200 and should be checked in?'))return;$('checkinBtn').disabled=true;try{const d=await api('checkin',{token:currentToken});show(d.message+(d.name?'\nName: '+d.name:'')+(d.id?'\nAlumni ID: '+d.id:'')+'\nPayment: '+(d.payment||'')+'\nReference: '+(d.transaction||''));if(!d.ok){$('checkinBtn').disabled=false;return} $('checkinHint').textContent='Check-in completed successfully.'}catch(e){show(e.message);$('checkinBtn').disabled=false}};
-</script></body></html>
+const $=id=>document.getElementById(id);
+function show(t){$("status").textContent=t}
+
+function api(action,params={}){
+  return new Promise((resolve,reject)=>{
+    const cb="alumniApi_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+    const s=document.createElement("script");
+    let done=false;
+    const timer=setTimeout(()=>finish(new Error("Server timeout. Check Apps Script deployment.")),20000);
+    function finish(err,data){
+      if(done)return;
+      done=true;clearTimeout(timer);delete window[cb];s.remove();
+      err?reject(err):resolve(data);
+    }
+    window[cb]=data=>finish(null,data);
+    s.onerror=()=>finish(new Error("Cannot reach Apps Script. Check URL and deployment access."));
+    const q=new URLSearchParams({action,callback:cb,...params});
+    s.src=API_URL+"?"+q.toString();
+    document.body.appendChild(s);
+  });
+}
+
+function renderAlumnus(d){
+  currentAlumnus=d;
+  $("alumniCard").classList.remove("hidden");
+  $("details").innerHTML=`<p><b>Name:</b> ${esc(d.name)}</p><p><b>Alumni ID:</b> ${esc(d.id)}</p><p><b>Course:</b> ${esc(d.course||"")}</p><p><b>Year:</b> ${esc(d.year||"")}</p>`;
+  const paid=String(d.payment).toLowerCase()==="yes"&&!!d.transaction;
+  $("paymentBadge").textContent=paid?"PAID":"NOT PAID";
+  $("paymentBadge").className=paid?"pill paid":"pill";
+  $("checkinCard").classList.remove("hidden");
+  $("checkinBtn").disabled=!paid;
+  $("checkinHint").textContent=paid?"Payment recorded. Verify it in the sheet, then complete check-in.":"Check-in locked until payment is confirmed.";
+  $("paymentCard").classList.toggle("hidden",paid);
+  $("reference").value=paid?d.transaction:"";
+}
+
+function esc(v){
+  return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+async function onScan(decoded){
+  if(busy)return;
+  busy=true;currentToken=decoded;
+  try{
+    if(scanner&&scanner.isScanning)await scanner.pause(true);
+    show("QR detected. Retrieving alumni details...");
+    const d=await api("lookup",{token:decoded});
+    if(!d.ok){show(d.message||"Alumnus not found.");resetScanner();return}
+    renderAlumnus(d);
+    show("Alumnus found. Check payment status below.");
+  }catch(e){show(e.message)}
+  finally{
+    busy=false;
+    if(scanner&&scanner.isScanning){try{scanner.resume()}catch(e){}}
+  }
+}
+
+function resetScanner(){
+  busy=false;
+  if(scanner&&scanner.isScanning){try{scanner.resume()}catch(e){}}
+}
+
+$("startBtn").onclick=async()=>{
+  try{
+    if(!scanner)scanner=new Html5Qrcode("reader");
+    $("startBtn").disabled=true;show("Starting camera...");
+    await scanner.start({facingMode:"environment"},{fps:10,qrbox:{width:230,height:230}},onScan,()=>{});
+    show("Camera ready. Scan an alumni QR pass.");
+  }catch(e){show("Scanner error: "+e.message)}
+  finally{$("startBtn").disabled=false}
+};
+
+$("stopBtn").onclick=async()=>{
+  try{if(scanner&&scanner.isScanning)await scanner.stop();show("Scanner stopped.")}
+  catch(e){show(e.message)}
+};
+
+$("copyUpi").onclick=async()=>{
+  try{await navigator.clipboard.writeText("ncaa@iob");show("UPI ID copied: ncaa@iob")}
+  catch(e){show("UPI ID: ncaa@iob")}
+};
+
+$("confirmPayment").onclick=async()=>{
+  if(!currentToken)return;
+  const reference=$("reference").value.trim(),pin=$("staffPin").value;
+  if(!reference||!pin){show("Enter the verified UPI reference and staff PIN.");return}
+  if(!confirm("Have you verified the ₹200 payment credit in the college UPI account?"))return;
+  $("confirmPayment").disabled=true;
+  try{
+    const d=await api("payment",{token:currentToken,reference,pin});
+    if(!d.ok){show(d.message||"Payment update failed.");return}
+    const updated=await api("lookup",{token:currentToken});
+    if(!updated.ok){show(updated.message||"Payment updated, but alumni details could not be refreshed.");return}
+    renderAlumnus(updated);
+    show("Payment marked PAID. Reference: "+(d.transaction||reference)+". You may now complete check-in.");
+  }catch(e){show(e.message)}
+  finally{$("confirmPayment").disabled=false}
+};
+
+$("checkinBtn").onclick=async()=>{
+  if(!currentToken||$("checkinBtn").disabled)return;
+  if(!confirm("Confirm this alumnus has paid ₹200 and should be checked in?"))return;
+  $("checkinBtn").disabled=true;
+  try{
+    const d=await api("checkin",{token:currentToken});
+    show((d.message||"Server response")+(d.name?"\nName: "+d.name:"")+(d.id?"\nAlumni ID: "+d.id:"")+"\nPayment: "+(d.payment||"")+"\nReference: "+(d.transaction||""));
+    if(!d.ok){$("checkinBtn").disabled=false;return}
+    $("checkinHint").textContent="Check-in completed successfully.";
+  }catch(e){show(e.message);$("checkinBtn").disabled=false}
+};
+</script>
+</body>
+</html>
