@@ -10,7 +10,7 @@
 <label>Engaged in business?</label><select id="business" onchange="toggleField('business','businessDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="businessDetailsWrap" class="hidden"><label>Business details</label><input id="businessDetails"></div>
 <label>Self-employed?</label><select id="selfEmployed" onchange="toggleField('selfEmployed','selfEmploymentDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="selfEmploymentDetailsWrap" class="hidden"><label>Self-employment details</label><input id="selfEmploymentDetails"></div>
 <label>UPI transaction reference (optional)</label><input id="regReference"><button class="gold" onclick="payUpi()">Pay ₹200 using UPI</button><button onclick="registerAlumni()">Submit Registration</button><div id="regStatus" class="status">Complete your details and submit.</div></section>
-<p class="public-note">Staff and administrator access: <a href="staff.html" style="color:#6b1830;font-weight:bold">Staff Login</a></p>
+
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbywz8qKlbYMhJSmReuPYzV_trUIQzFGJNLh6mRnvz-M2w8u1QS9r7_vQqd8Jf461S2nTg/exec';
 let sessionToken="";
