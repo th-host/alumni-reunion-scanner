@@ -2,7 +2,11 @@
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>NEWPHORIA 2026 – Alumni Registration</title><style>
 :root{--maroon:#6b1830;--gold:#c9a45c;--ink:#28232a;--muted:#716b70;--bg:#f7f3f4}*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:var(--bg);color:var(--ink);max-width:900px;margin:0 auto;padding:16px}.brand{text-align:center;background:linear-gradient(135deg,#541226,#7c2942);color:white;border-radius:18px;padding:22px 16px;margin-bottom:16px}.logos{display:flex;justify-content:center;align-items:center;gap:18px;margin-bottom:12px;flex-wrap:wrap}.logo{width:82px;height:82px;object-fit:contain;background:#fff;border:2px solid #e2c98f;border-radius:12px;padding:6px}.brand h1{font-size:22px;margin:8px 0}.brand p{margin:5px 0;color:#f2e7e9}.card{background:white;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 3px 14px #32101a12}h2{font-size:18px;color:var(--maroon);margin:0 0 12px}button{border:0;border-radius:9px;background:var(--maroon);color:white;padding:12px 15px;font-size:15px;font-weight:600;cursor:pointer;margin:5px 4px 5px 0}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:#eee7e9;color:var(--maroon)}.green{background:#18794e}.gold{background:#a87822}.row{display:flex;gap:8px;flex-wrap:wrap}.row button{flex:1}label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}input,select{width:100%;padding:12px;border:1px solid #d8cdd1;border-radius:8px;font-size:16px}.status{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f1f2;border-radius:9px;padding:13px;margin-top:10px;font-size:14px;line-height:1.5}.pill{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#f8e9e9;color:#a32332}.paid{background:#e4f4eb;color:#176b42}.amount{font-size:28px;color:var(--maroon);font-weight:bold}.upi{font-size:19px;font-weight:bold;color:var(--maroon)}.payqr{display:block;width:170px;height:170px;object-fit:contain;margin:12px auto}.hint{font-size:12px;color:var(--muted);line-height:1.5}.hidden{display:none!important}.details p{margin:7px 0;font-size:14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.metric{background:#f8f2f4;padding:13px;border-radius:10px}.metric b{display:block;font-size:24px;color:var(--maroon)}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}#reader{width:100%;max-width:440px;margin:auto;min-height:20px}
 
-.public-note{text-align:center;color:var(--muted);font-size:12px;margin:18px 0}.brand h1{letter-spacing:.3px}</style></head><body>
+.public-note{text-align:center;color:var(--muted);font-size:12px;margin:18px 0}.brand h1{letter-spacing:.3px}
+/* Basic copy deterrence only; not a security boundary. */
+html, body, body * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+input, textarea, select, [contenteditable="true"] { -webkit-user-select: text !important; user-select: text !important; -webkit-touch-callout: default; }
+</style></head><body>
 <header class="brand"><div class="logos"><img class="logo" src="alumni-logo.png" alt="Alumni logo"><img class="logo" src="newphoria-logo.png" alt="Newphoria logo"></div><h1>NEW COLLEGE ALUMNI ASSOCIATION</h1><p>NEWPHORIA 2026</p><p>28 November 2026</p></header>
 <section class="card"><h2>Alumni Registration</h2><p class="hint">Registration fee ₹200 · UPI ID ncaa@iob. Payment is subject to staff verification.</p><div class="grid"><div><label>Full name *</label><input id="regName"></div><div><label>Email address *</label><input id="regEmail" type="email"></div><div><label>Mobile number *</label><input id="regMobile" inputmode="tel"></div><div><label>Year of completion *</label><input id="regYear"></div><div><label>Course *</label><input id="regCourse"></div></div>
 <label>Currently studying?</label><select id="studying" onchange="toggleField('studying','studyDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="studyDetailsWrap" class="hidden"><label>Course / Institution</label><input id="studyDetails"></div>
@@ -21,4 +25,18 @@ function toggleField(sel,field){$(field+'Wrap').classList.toggle('hidden',$(sel)
 function payUpi(){location.href='upi://pay?pa=ncaa@iob&am=200&cu=INR&tn=NEWPHORIA%202026%20Registration';}
 async function registerAlumni(){const payload={name:$('regName').value,email:$('regEmail').value,mobile:$('regMobile').value,year:$('regYear').value,course:$('regCourse').value,studying:$('studying').value,studyDetails:$('studyDetails').value,employment:$('employment').value,occupation:$('occupation').value,business:$('business').value,businessDetails:$('businessDetails').value,selfEmployed:$('selfEmployed').value,selfEmploymentDetails:$('selfEmploymentDetails').value,reference:$('regReference').value};$('regStatus').textContent='Submitting registration...';try{const r=await api('register',{payload:JSON.stringify(payload)});$('regStatus').textContent=r.message+(r.id?'\nAlumni ID: '+r.id:'');}catch(e){$('regStatus').textContent=e.message;}}
 
+</script><script>
+/* Basic inspection deterrence only. Browser source/devtools remain accessible. */
+(function(){
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); }, {capture:true});
+  document.addEventListener('keydown', function(e){
+    var k=(e.key||'').toLowerCase();
+    var blocked = e.key === 'F12' ||
+      (e.ctrlKey && !e.shiftKey && ['u','s'].includes(k)) ||
+      (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(k)) ||
+      (e.metaKey && !e.shiftKey && ['u','s'].includes(k)) ||
+      (e.metaKey && e.shiftKey && ['i','j','c'].includes(k));
+    if(blocked){ e.preventDefault(); e.stopPropagation(); }
+  }, {capture:true});
+})();
 </script></body></html>
