@@ -7,14 +7,14 @@ html, body, body * { -webkit-user-select: none; user-select: none; -webkit-touch
 input, textarea, select, [contenteditable="true"] { -webkit-user-select: text !important; user-select: text !important; -webkit-touch-callout: default; }
 </style></head><body>
 <header class="brand"><div class="logos"><img class="logo" src="alumni-logo.png" alt="Alumni logo"><img class="logo" src="newphoria-logo.png" alt="Newphoria logo"></div><h1>NEW COLLEGE ALUMNI ASSOCIATION</h1><p>NEWPHORIA 2026</p><p>28 November 2026</p></header>
-<section class="card"><h2>Alumni Registration</h2><p class="hint">Registration fee ₹200 · UPI ID ncaa@iob. Payment is subject to staff verification. All fields marked * are compulsory. UPI transaction reference is optional.</p>
+<section class="card"><h2>Alumni Registration</h2><div class="status" style="margin:0 0 14px;background:#f8f1f3;border-left:4px solid var(--maroon)"><div><strong>Registration Fee:</strong> ₹200</div><div style="margin-top:6px"><strong>UPI ID:</strong> <span class="upi">ncaa@iob</span></div><div class="hint" style="margin-top:6px">Make your payment using your UPI app. Enter the transaction reference below if available. Payment is subject to staff verification. All fields marked * are compulsory.</div></div>
 <form id="registrationForm" onsubmit="event.preventDefault();registerAlumni();" novalidate>
 <div class="grid"><div><label for="regName">Full name *</label><input id="regName" name="name" autocomplete="name" required></div><div><label for="regEmail">Email address *</label><input id="regEmail" name="email" type="email" autocomplete="email" required></div><div><label for="regMobile">Mobile number *</label><input id="regMobile" name="mobile" type="tel" inputmode="tel" autocomplete="tel" required></div><div><label for="regYear">Year of completion *</label><input id="regYear" name="year" inputmode="numeric" required></div><div><label for="regCourse">Course *</label><input id="regCourse" name="course" required></div></div>
 <label for="studying">Currently studying? *</label><select id="studying" name="studying" required onchange="toggleField('studying','studyDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="studyDetailsWrap" class="hidden"><label for="studyDetails">Course / Institution *</label><input id="studyDetails" name="studyDetails" disabled></div>
 <label for="employment">Employed / retired? *</label><select id="employment" name="employment" required onchange="toggleField('employment','occupation')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="occupationWrap" class="hidden"><label for="occupation">Present occupation *</label><input id="occupation" name="occupation" disabled></div>
 <label for="business">Engaged in business? *</label><select id="business" name="business" required onchange="toggleField('business','businessDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="businessDetailsWrap" class="hidden"><label for="businessDetails">Business details *</label><input id="businessDetails" name="businessDetails" disabled></div>
 <label for="selfEmployed">Self-employed? *</label><select id="selfEmployed" name="selfEmployed" required onchange="toggleField('selfEmployed','selfEmploymentDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="selfEmploymentDetailsWrap" class="hidden"><label for="selfEmploymentDetails">Self-employment details *</label><input id="selfEmploymentDetails" name="selfEmploymentDetails" disabled></div>
-<label for="regReference">UPI transaction reference (optional)</label><input id="regReference" name="reference" autocomplete="off"><button type="button" class="gold" onclick="payUpi()">Pay ₹200 using UPI</button><button id="submitRegistration" type="submit">Submit Registration</button></form><div id="regStatus" class="status" role="status" aria-live="polite">Complete all compulsory details and submit. UPI reference is optional.</div></section>
+<label for="regReference">UPI transaction reference</label><input id="regReference" name="reference" autocomplete="off"><button id="submitRegistration" type="submit">Submit Registration</button></form><div id="regStatus" class="status" role="status" aria-live="polite">Complete all compulsory details and submit.</div></section>
 
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbywz8qKlbYMhJSmReuPYzV_trUIQzFGJNLh6mRnvz-M2w8u1QS9r7_vQqd8Jf461S2nTg/exec';
@@ -31,11 +31,10 @@ function toggleField(sel,field){
   input.required=show;
   if(!show) input.value='';
 }
-function payUpi(){location.href='upi://pay?pa=ncaa@iob&am=200&cu=INR&tn=NEWPHORIA%202026%20Registration';}
 async function registerAlumni(){
   const form=$('registrationForm');
   if(!form.reportValidity()){
-    $('regStatus').textContent='Please complete all compulsory fields. UPI transaction reference is optional.';
+    $('regStatus').textContent='Please complete all compulsory fields before submitting.';
     const firstInvalid=form.querySelector(':invalid');
     if(firstInvalid) firstInvalid.focus();
     return;
