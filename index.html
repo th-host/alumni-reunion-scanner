@@ -2,207 +2,45 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The New College Alumni Reunion – Newphoria Check-in</title>
+<title>NEWPHORIA 2026 – Alumni Portal</title>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <style>
-:root{--maroon:#6b1830;--gold:#c9a45c;--ink:#28232a;--muted:#716b70;--bg:#f7f3f4}
-*{box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:var(--bg);color:var(--ink);max-width:620px;margin:0 auto;padding:16px}
-.brand{text-align:center;background:linear-gradient(135deg,#541226,#7c2942);color:white;border-radius:18px;padding:22px 16px;margin-bottom:16px}
-.logos{display:flex;justify-content:center;align-items:center;gap:18px;margin-bottom:12px;flex-wrap:wrap}
-.logo{width:88px;height:88px;object-fit:contain;background:#fff;border:2px solid #e2c98f;border-radius:12px;padding:6px;display:block}
-.brand h1{font-size:22px;margin:8px 0}
-.brand p{margin:5px 0;color:#f2e7e9}
-.card{background:white;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 3px 14px #32101a12}
-h2{font-size:18px;color:var(--maroon);margin:0 0 12px}
-#reader{width:100%;max-width:440px;margin:auto}
-button{border:0;border-radius:9px;background:var(--maroon);color:white;padding:12px 15px;font-size:15px;font-weight:600;cursor:pointer;margin:5px 4px 5px 0}
-button:disabled{opacity:.45;cursor:not-allowed}
-.secondary{background:#eee7e9;color:var(--maroon)}
-.green{background:#18794e}
-.gold{background:#a87822}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.row button{flex:1}
-label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}
-input{width:100%;padding:12px;border:1px solid #d8cdd1;border-radius:8px;font-size:16px}
-#status{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f1f2;border-radius:9px;padding:13px;margin-top:10px;font-size:14px;line-height:1.5}
-.pill{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#f8e9e9;color:#a32332}
-.paid{background:#e4f4eb;color:#176b42}
-.amount{font-size:30px;color:var(--maroon);font-weight:bold;margin:5px 0}
-.upi{font-size:19px;font-weight:bold;color:var(--maroon)}
-.payqr{display:block;width:190px;height:190px;object-fit:contain;margin:12px auto}
-.hint{font-size:12px;color:var(--muted);line-height:1.5}
-.hidden{display:none}
-.details p{margin:7px 0;font-size:14px}
-.details b{color:#51434a}
-.logo-error{font-size:11px;color:#fff;margin-top:4px}
-</style>
-</head>
-<body>
-<header class="brand">
-  <div class="logos">
-    <img class="logo" src="alumni-logo.png" alt="The New College Alumni Association logo"
-         onerror="this.style.display='none';document.getElementById('alumniLogoError').style.display='block'">
-    <img class="logo" src="newphoria-logo.png" alt="Newphoria logo"
-         onerror="this.style.display='none';document.getElementById('newphoriaLogoError').style.display='block'">
-  </div>
-  <div class="logo-error" id="alumniLogoError" style="display:none">Alumni logo not loaded — check alumni-logo.png</div>
-  <div class="logo-error" id="newphoriaLogoError" style="display:none">Newphoria logo not loaded — check newphoria-logo.png</div>
-  <h1>NEW COLLEGE ALUMNI ASSOCIATION</h1>
-  <p>NEWPHORIA</p>
-  <p>28 November 2026</p>
-</header>
-
-<section class="card">
-  <h2>Alumni QR Scanner</h2>
-  <div id="reader"></div>
-  <div class="row">
-    <button id="startBtn">Start Scanner</button>
-    <button id="stopBtn" class="secondary">Stop Scanner</button>
-  </div>
-  <div id="status" role="status" aria-live="polite">Ready to scan an alumni QR pass.</div>
-</section>
-
-<section id="alumniCard" class="card hidden">
-  <h2>Alumni Details</h2>
-  <div id="details" class="details"></div>
-  <p>Payment status: <span id="paymentBadge" class="pill">NOT PAID</span></p>
-</section>
-
-<section id="paymentCard" class="card hidden">
-  <h2>Spot UPI Payment</h2>
-  <div class="amount">₹200</div>
-  <p class="hint">UPI only · No cash accepted</p>
-  <img class="payqr" src="upi-payment-200.png" alt="₹200 UPI payment QR">
-  <p class="upi">ncaa@iob</p>
-  <button type="button" class="secondary" id="copyUpi">Copy UPI ID</button>
-  <p class="hint">Ask the alumnus to pay ₹200. Staff must verify that the payment is credited to the college account before confirming.</p>
-  <label for="reference">UPI transaction ID / UTR reference</label>
-  <input id="reference" placeholder="Enter verified UPI reference" autocomplete="off">
-  <label for="staffPin">Staff PIN</label>
-  <input id="staffPin" type="password" placeholder="Enter staff PIN" autocomplete="off">
-  <button id="confirmPayment" class="gold">Confirm Verified Payment</button>
-</section>
-
-<section id="checkinCard" class="card hidden">
-  <h2>Attendance</h2>
-  <button id="checkinBtn" class="green" disabled>Complete Check-in</button>
-  <p class="hint" id="checkinHint">Check-in remains locked until payment is marked PAID and a reference is saved.</p>
-</section>
-
+:root{--maroon:#6b1830;--gold:#c9a45c;--ink:#28232a;--muted:#716b70;--bg:#f7f3f4}*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:var(--bg);color:var(--ink);max-width:900px;margin:0 auto;padding:16px}.brand{text-align:center;background:linear-gradient(135deg,#541226,#7c2942);color:white;border-radius:18px;padding:22px 16px;margin-bottom:16px}.logos{display:flex;justify-content:center;align-items:center;gap:18px;margin-bottom:12px;flex-wrap:wrap}.logo{width:82px;height:82px;object-fit:contain;background:#fff;border:2px solid #e2c98f;border-radius:12px;padding:6px}.brand h1{font-size:22px;margin:8px 0}.brand p{margin:5px 0;color:#f2e7e9}.card{background:white;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 3px 14px #32101a12}h2{font-size:18px;color:var(--maroon);margin:0 0 12px}button{border:0;border-radius:9px;background:var(--maroon);color:white;padding:12px 15px;font-size:15px;font-weight:600;cursor:pointer;margin:5px 4px 5px 0}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:#eee7e9;color:var(--maroon)}.green{background:#18794e}.gold{background:#a87822}.row{display:flex;gap:8px;flex-wrap:wrap}.row button{flex:1}label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}input,select{width:100%;padding:12px;border:1px solid #d8cdd1;border-radius:8px;font-size:16px}.status{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f1f2;border-radius:9px;padding:13px;margin-top:10px;font-size:14px;line-height:1.5}.pill{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#f8e9e9;color:#a32332}.paid{background:#e4f4eb;color:#176b42}.amount{font-size:28px;color:var(--maroon);font-weight:bold}.upi{font-size:19px;font-weight:bold;color:var(--maroon)}.payqr{display:block;width:170px;height:170px;object-fit:contain;margin:12px auto}.hint{font-size:12px;color:var(--muted);line-height:1.5}.hidden{display:none!important}.details p{margin:7px 0;font-size:14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.metric{background:#f8f2f4;padding:13px;border-radius:10px}.metric b{display:block;font-size:24px;color:var(--maroon)}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}#reader{width:100%;max-width:440px;margin:auto;min-height:20px}
+</style></head><body>
+<header class="brand"><div class="logos"><img class="logo" src="alumni-logo.png" alt="Alumni logo"><img class="logo" src="newphoria-logo.png" alt="Newphoria logo"></div><h1>NEW COLLEGE ALUMNI ASSOCIATION</h1><p>NEWPHORIA 2026</p><p>28 November 2026</p></header>
+<section class="card"><h2>Alumni Registration</h2><p class="hint">Registration fee ₹200 · UPI ID ncaa@iob. Payment is subject to staff verification.</p><div class="grid"><div><label>Full name *</label><input id="regName"></div><div><label>Email address *</label><input id="regEmail" type="email"></div><div><label>Mobile number *</label><input id="regMobile" inputmode="tel"></div><div><label>Year of completion *</label><input id="regYear"></div><div><label>Course *</label><input id="regCourse"></div></div>
+<label>Currently studying?</label><select id="studying" onchange="toggleField('studying','studyDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="studyDetailsWrap" class="hidden"><label>Course / Institution</label><input id="studyDetails"></div>
+<label>Employed / retired?</label><select id="employment" onchange="toggleField('employment','occupation')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="occupationWrap" class="hidden"><label>Present occupation</label><input id="occupation"></div>
+<label>Engaged in business?</label><select id="business" onchange="toggleField('business','businessDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="businessDetailsWrap" class="hidden"><label>Business details</label><input id="businessDetails"></div>
+<label>Self-employed?</label><select id="selfEmployed" onchange="toggleField('selfEmployed','selfEmploymentDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="selfEmploymentDetailsWrap" class="hidden"><label>Self-employment details</label><input id="selfEmploymentDetails"></div>
+<label>UPI transaction reference (optional)</label><input id="regReference"><button class="gold" onclick="payUpi()">Pay ₹200 using UPI</button><button onclick="registerAlumni()">Submit Registration</button><div id="regStatus" class="status">Complete your details and submit.</div></section>
+<section class="card" id="loginCard"><h2>Staff Login</h2><label>Email address</label><input id="loginEmail" type="email" autocomplete="username"><label>Password</label><input id="loginPassword" type="password" autocomplete="current-password"><button onclick="login()">Login</button><div id="loginStatus" class="status">Staff and management login.</div></section>
+<section id="staffArea" class="hidden"><section class="card"><div class="row"><div style="flex:2"><b id="staffName"></b> <span id="staffRole" class="pill"></span></div><button class="secondary" onclick="logout()">Logout</button></div></section>
+<section class="card"><h2>Dashboard</h2><div id="metrics" class="grid"></div><button class="secondary" onclick="loadDashboard()">Refresh</button></section>
+<section class="card hidden" id="scannerPanel"><h2>Alumni QR Scanner</h2><div id="reader"></div><div class="row"><button id="startBtn" onclick="startScanner()">Start Scanner</button><button class="secondary" onclick="stopScanner()">Stop Scanner</button></div><div id="scanStatus" class="status">Ready to scan.</div><div id="alumniCard" class="hidden"><h3 id="alumniName"></h3><div id="alumniMeta" class="details"></div><p>Payment: <b id="paymentStatus"></b></p><div id="paymentActions" class="hidden"><label>Verified UPI UTR / transaction reference</label><input id="reference"><label>Remarks</label><input id="remarks"><button class="gold" onclick="verifyPayment()">Confirm Verified Payment</button><button class="secondary" onclick="rejectPayment()">Reject / Recheck</button></div><button id="checkinBtn" class="green" onclick="checkin()" disabled>Complete Check-in</button></div></section>
+<section class="card hidden" id="registrationsPanel"><h2>Registration Management</h2><input id="searchQ" placeholder="Search name, email, mobile, ID, course or year"><button onclick="loadRegistrations()">Search</button><div class="tablewrap"><table><thead><tr><th>Alumni ID</th><th>Name / Email</th><th>Course / Year</th><th>Payment</th><th>Attendance</th></tr></thead><tbody id="registrationRows"></tbody></table></div></section>
+<section class="card hidden" id="staffPanel"><h2>Create Staff Account</h2><label>Email</label><input id="newStaffEmail" type="email"><label>Name</label><input id="newStaffName"><label>Role</label><select id="newStaffRole"><option value="STAFF_VOLUNTEER">Staff Volunteer</option><option value="SCANNING_STAFF">Scanning Staff</option><option value="ADMIN">Admin</option><option value="MANAGEMENT">Management</option></select><label>Password (minimum 12 characters)</label><input id="newStaffPassword" type="password"><button onclick="createStaff()">Create account</button><div id="staffStatus" class="status"></div></section>
+<section class="card hidden" id="auditPanel"><h2>Recent Audit Log</h2><div class="tablewrap"><table><tbody id="auditRows"></tbody></table></div></section></section>
 <script>
-const API_URL="https://script.google.com/macros/s/AKfycbywz8qKlbYMhJSmReuPYzV_trUIQzFGJNLh6mRnvz-M2w8u1QS9r7_vQqd8Jf461S2nTg/exec";
-let scanner=null,busy=false,currentToken="",currentAlumnus=null;
+const API_URL='https://script.google.com/macros/s/AKfycbywz8qKlbYMhJSmReuPYzV_trUIQzFGJNLh6mRnvz-M2w8u1QS9r7_vQqd8Jf461S2nTg/exec';
+let sessionToken='',currentUser=null,scanner=null,currentToken='',currentAlumnus=null,scanBusy=false;
 const $=id=>document.getElementById(id);
-function show(t){$("status").textContent=t}
-
-function api(action,params={}){
-  return new Promise((resolve,reject)=>{
-    const cb="alumniApi_"+Date.now()+"_"+Math.random().toString(36).slice(2);
-    const s=document.createElement("script");
-    let done=false;
-    const timer=setTimeout(()=>finish(new Error("Server timeout. Check Apps Script deployment.")),20000);
-    function finish(err,data){
-      if(done)return;
-      done=true;clearTimeout(timer);delete window[cb];s.remove();
-      err?reject(err):resolve(data);
-    }
-    window[cb]=data=>finish(null,data);
-    s.onerror=()=>finish(new Error("Cannot reach Apps Script. Check URL and deployment access."));
-    const q=new URLSearchParams({action,callback:cb,...params});
-    s.src=API_URL+"?"+q.toString();
-    document.body.appendChild(s);
-  });
-}
-
-function renderAlumnus(d){
-  currentAlumnus=d;
-  $("alumniCard").classList.remove("hidden");
-  $("details").innerHTML=`<p><b>Name:</b> ${esc(d.name)}</p><p><b>Alumni ID:</b> ${esc(d.id)}</p><p><b>Course:</b> ${esc(d.course||"")}</p><p><b>Year:</b> ${esc(d.year||"")}</p>`;
-  const paid=String(d.payment).toLowerCase()==="yes"&&!!d.transaction;
-  $("paymentBadge").textContent=paid?"PAID":"NOT PAID";
-  $("paymentBadge").className=paid?"pill paid":"pill";
-  $("checkinCard").classList.remove("hidden");
-  $("checkinBtn").disabled=!paid;
-  $("checkinHint").textContent=paid?"Payment recorded. Verify it in the sheet, then complete check-in.":"Check-in locked until payment is confirmed.";
-  $("paymentCard").classList.toggle("hidden",paid);
-  $("reference").value=paid?d.transaction:"";
-}
-
-function esc(v){
-  return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-
-async function onScan(decoded){
-  if(busy)return;
-  busy=true;currentToken=decoded;
-  try{
-    if(scanner&&scanner.isScanning)await scanner.pause(true);
-    show("QR detected. Retrieving alumni details...");
-    const d=await api("lookup",{token:decoded});
-    if(!d.ok){show(d.message||"Alumnus not found.");resetScanner();return}
-    renderAlumnus(d);
-    show("Alumnus found. Check payment status below.");
-  }catch(e){show(e.message)}
-  finally{
-    busy=false;
-    if(scanner&&scanner.isScanning){try{scanner.resume()}catch(e){}}
-  }
-}
-
-function resetScanner(){
-  busy=false;
-  if(scanner&&scanner.isScanning){try{scanner.resume()}catch(e){}}
-}
-
-$("startBtn").onclick=async()=>{
-  try{
-    if(!scanner)scanner=new Html5Qrcode("reader");
-    $("startBtn").disabled=true;show("Starting camera...");
-    await scanner.start({facingMode:"environment"},{fps:10,qrbox:{width:230,height:230}},onScan,()=>{});
-    show("Camera ready. Scan an alumni QR pass.");
-  }catch(e){show("Scanner error: "+e.message)}
-  finally{$("startBtn").disabled=false}
-};
-
-$("stopBtn").onclick=async()=>{
-  try{if(scanner&&scanner.isScanning)await scanner.stop();show("Scanner stopped.")}
-  catch(e){show(e.message)}
-};
-
-$("copyUpi").onclick=async()=>{
-  try{await navigator.clipboard.writeText("ncaa@iob");show("UPI ID copied: ncaa@iob")}
-  catch(e){show("UPI ID: ncaa@iob")}
-};
-
-$("confirmPayment").onclick=async()=>{
-  if(!currentToken)return;
-  const reference=$("reference").value.trim(),pin=$("staffPin").value;
-  if(!reference||!pin){show("Enter the verified UPI reference and staff PIN.");return}
-  if(!confirm("Have you verified the ₹200 payment credit in the college UPI account?"))return;
-  $("confirmPayment").disabled=true;
-  try{
-    const d=await api("payment",{token:currentToken,reference,pin});
-    if(!d.ok){show(d.message||"Payment update failed.");return}
-    const updated=await api("lookup",{token:currentToken});
-    if(!updated.ok){show(updated.message||"Payment updated, but alumni details could not be refreshed.");return}
-    renderAlumnus(updated);
-    show("Payment marked PAID. Reference: "+(d.transaction||reference)+". You may now complete check-in.");
-  }catch(e){show(e.message)}
-  finally{$("confirmPayment").disabled=false}
-};
-
-$("checkinBtn").onclick=async()=>{
-  if(!currentToken||$("checkinBtn").disabled)return;
-  if(!confirm("Confirm this alumnus has paid ₹200 and should be checked in?"))return;
-  $("checkinBtn").disabled=true;
-  try{
-    const d=await api("checkin",{token:currentToken});
-    show((d.message||"Server response")+(d.name?"\nName: "+d.name:"")+(d.id?"\nAlumni ID: "+d.id:"")+"\nPayment: "+(d.payment||"")+"\nReference: "+(d.transaction||""));
-    if(!d.ok){$("checkinBtn").disabled=false;return}
-    $("checkinHint").textContent="Check-in completed successfully.";
-  }catch(e){show(e.message);$("checkinBtn").disabled=false}
-};
-</script>
-</body>
-</html>
+function api(action,params={}){return new Promise((resolve,reject)=>{const cb='np_'+Date.now()+'_'+Math.random().toString(36).slice(2);const s=document.createElement('script');let done=false;const timer=setTimeout(()=>finish(new Error('Apps Script request timed out. Check deployment URL and access.')),20000);function finish(err,data){if(done)return;done=true;clearTimeout(timer);delete window[cb];s.remove();err?reject(err):resolve(data);}window[cb]=d=>finish(null,d);s.onerror=()=>finish(new Error('Cannot reach Apps Script. Verify the /exec URL and deployment access.'));const q=new URLSearchParams({action,callback:cb,...params});s.src=API_URL+'?'+q.toString();document.body.appendChild(s);});}
+function toggleField(sel,field){$(field+'Wrap').classList.toggle('hidden',$(sel).value!=='Yes');}
+function payUpi(){location.href='upi://pay?pa=ncaa@iob&am=200&cu=INR&tn=NEWPHORIA%202026%20Registration';}
+async function registerAlumni(){const payload={name:$('regName').value,email:$('regEmail').value,mobile:$('regMobile').value,year:$('regYear').value,course:$('regCourse').value,studying:$('studying').value,studyDetails:$('studyDetails').value,employment:$('employment').value,occupation:$('occupation').value,business:$('business').value,businessDetails:$('businessDetails').value,selfEmployed:$('selfEmployed').value,selfEmploymentDetails:$('selfEmploymentDetails').value,reference:$('regReference').value};$('regStatus').textContent='Submitting registration...';try{const r=await api('register',{payload:JSON.stringify(payload)});$('regStatus').textContent=r.message+(r.id?'\nAlumni ID: '+r.id:'');}catch(e){$('regStatus').textContent=e.message;}}
+async function sha256Base64(text){const bytes=new TextEncoder().encode(text);const hash=await crypto.subtle.digest('SHA-256',bytes);let binary='';new Uint8Array(hash).forEach(b=>binary+=String.fromCharCode(b));return btoa(binary);}
+async function login(){const email=$('loginEmail').value.trim().toLowerCase(),password=$('loginPassword').value;$('loginStatus').textContent='Authenticating...';try{const c=await api('loginSalt',{email});if(!c.ok){$('loginStatus').textContent=c.message;return;}const passwordHash=await sha256Base64(c.salt+password);const r=await api('loginHash',{email,passwordHash});if(!r.ok){$('loginStatus').textContent=r.message;return;}sessionToken=r.token;currentUser=r.user;$('loginCard').classList.add('hidden');$('staffArea').classList.remove('hidden');$('staffName').textContent=currentUser.name||currentUser.email;$('staffRole').textContent=currentUser.role;const role=currentUser.role;if(['SUPER_ADMIN','ADMIN','STAFF_VOLUNTEER','SCANNING_STAFF'].includes(role))$('scannerPanel').classList.remove('hidden');if(['SUPER_ADMIN','ADMIN','MANAGEMENT'].includes(role))$('registrationsPanel').classList.remove('hidden');if(['SUPER_ADMIN','ADMIN'].includes(role))$('staffPanel').classList.remove('hidden');if(['SUPER_ADMIN','ADMIN','MANAGEMENT'].includes(role))$('auditPanel').classList.remove('hidden');loadDashboard();if(!$('registrationsPanel').classList.contains('hidden'))loadRegistrations();if(!$('auditPanel').classList.contains('hidden'))loadAudit();}catch(e){$('loginStatus').textContent=e.message;}}
+async function logout(){try{await api('logout',{session:sessionToken});}catch(e){}location.reload();}
+async function loadDashboard(){try{const r=await api('dashboard',{session:sessionToken});if(!r.ok)throw Error(r.message);const m=r.metrics||{};$('metrics').innerHTML=Object.entries({'Registrations':m.registered,'Checked In':m.checkedIn,'Awaiting Check-in':m.awaitingCheckin,'Payments Verified':m.verified,'Payments Pending':m.pending,'Payments Rejected':m.rejected,'Studying':m.studying,'Employed / Retired':m.employed,'In Business':m.business,'Self-Employed':m.selfEmployed}).map(([k,v])=>`<div class="metric">${k}<b>${v??0}</b></div>`).join('');}catch(e){alert(e.message);}}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function loadRegistrations(){try{const r=await api('registrations',{session:sessionToken,q:$('searchQ').value});if(!r.ok)throw Error(r.message);$('registrationRows').innerHTML=(r.rows||[]).map(x=>`<tr><td>${esc(x.id)}</td><td>${esc(x.name)}<br>${esc(x.email)}</td><td>${esc(x.course)} / ${esc(x.year)}</td><td>${esc(x.paymentStatus)}</td><td>${esc(x.attendance)}</td></tr>`).join('');}catch(e){alert(e.message);}}
+async function loadAudit(){try{const r=await api('audit',{session:sessionToken});if(!r.ok)throw Error(r.message);$('auditRows').innerHTML=(r.rows||[]).map(row=>'<tr>'+row.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('');}catch(e){alert(e.message);}}
+async function startScanner(){const b=$('startBtn');b.disabled=true;$('scanStatus').textContent='Starting camera...';try{if(!window.isSecureContext)throw Error('Open this GitHub Pages site using HTTPS.');if(!navigator.mediaDevices?.getUserMedia)throw Error('Camera access is unavailable in this browser. Use updated Chrome.');if(typeof Html5Qrcode==='undefined')throw Error('QR scanner library did not load. Check internet/CDN access.');if(!scanner)scanner=new Html5Qrcode('reader');await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:230,height:230}},onScan,()=>{});$('scanStatus').textContent='Camera ready. Scan an alumni QR pass.';}catch(e){console.error(e);const n=e?.name||'';let m=e?.message||String(e);if(n==='NotAllowedError'||n==='PermissionDeniedError')m='Camera permission denied. In Chrome site settings, allow Camera for this GitHub Pages site and reload.';else if(n==='NotFoundError')m='No camera found on this device.';else if(n==='NotReadableError')m='Camera is busy. Close other camera apps/tabs.';$('scanStatus').textContent='Scanner error: '+(n?n+': ':'')+m;}finally{b.disabled=false;}}
+async function stopScanner(){try{if(scanner?.isScanning)await scanner.stop();$('scanStatus').textContent='Scanner stopped.';}catch(e){$('scanStatus').textContent=e.message;}}
+async function onScan(decoded){if(scanBusy)return;scanBusy=true;currentToken=decoded;try{if(scanner?.isScanning)await scanner.pause(true);$('scanStatus').textContent='QR detected. Retrieving alumni details...';const d=await api('lookup',{session:sessionToken,qrToken:decoded});if(!d.ok){$('scanStatus').textContent=d.message;return;}currentAlumnus=d;$('alumniCard').classList.remove('hidden');$('alumniName').textContent=d.name+' · '+d.id;$('alumniMeta').textContent=(d.course||'')+' · '+(d.year||'');$('paymentStatus').textContent=d.paymentStatus+(d.transaction?' · Ref: '+d.transaction:'');$('reference').value=d.transaction||'';const canVerify=['SUPER_ADMIN','ADMIN','STAFF_VOLUNTEER'].includes(currentUser.role);$('paymentActions').classList.toggle('hidden',!canVerify||d.paymentStatus==='VERIFIED');$('checkinBtn').disabled=d.paymentStatus!=='VERIFIED'||d.attendance==='Checked In';$('scanStatus').textContent=d.attendance==='Checked In'?'Already checked in.':'Alumnus found. Review payment status.';}catch(e){$('scanStatus').textContent='Lookup error: '+e.message;}finally{scanBusy=false;}}
+async function verifyPayment(){if(!currentAlumnus)return;const reference=$('reference').value.trim();if(!reference){$('scanStatus').textContent='Enter the UPI reference after confirming credit to the college account.';return;}if(!confirm('Have you verified that ₹200 is credited to the college account?'))return;try{const r=await api('payment',{session:sessionToken,alumniId:currentAlumnus.id,decision:'VERIFIED',reference,remarks:$('remarks').value});if(!r.ok)throw Error(r.message);currentAlumnus.paymentStatus='VERIFIED';currentAlumnus.transaction=reference;$('paymentStatus').textContent='VERIFIED · Ref: '+reference;$('paymentActions').classList.add('hidden');$('checkinBtn').disabled=false;$('scanStatus').textContent='Payment verified. You may complete check-in.';loadDashboard();}catch(e){$('scanStatus').textContent='Payment verification error: '+e.message;}}
+async function rejectPayment(){if(!currentAlumnus)return;const decision=confirm('Reject this payment? Choose Cancel to mark Recheck Required.')?'REJECTED':'RECHECK REQUIRED';try{const r=await api('payment',{session:sessionToken,alumniId:currentAlumnus.id,decision,reference:$('reference').value,remarks:$('remarks').value});if(!r.ok)throw Error(r.message);currentAlumnus.paymentStatus=decision;$('paymentStatus').textContent=decision;$('paymentActions').classList.add('hidden');$('checkinBtn').disabled=true;$('scanStatus').textContent='Payment status updated: '+decision;loadDashboard();}catch(e){$('scanStatus').textContent=e.message;}}
+async function checkin(){if(!currentAlumnus||$('checkinBtn').disabled)return;if(!confirm('Confirm check-in for '+currentAlumnus.name+'?'))return;$('checkinBtn').disabled=true;try{const r=await api('checkin',{session:sessionToken,qrToken:currentToken});$('scanStatus').textContent=r.message+(r.name?'\nName: '+r.name:'')+(r.id?'\nAlumni ID: '+r.id:'');if(!r.ok)$('checkinBtn').disabled=false;else loadDashboard();}catch(e){$('scanStatus').textContent=e.message;$('checkinBtn').disabled=false;}}
+async function createStaff(){try{const r=await api('staffCreate',{session:sessionToken,email:$('newStaffEmail').value,name:$('newStaffName').value,role:$('newStaffRole').value,password:$('newStaffPassword').value});$('staffStatus').textContent=r.message;}catch(e){$('staffStatus').textContent=e.message;}}
+</script></body></html>
