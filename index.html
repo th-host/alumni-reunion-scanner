@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>NEWPHORIA 2026 – Alumni Registration</title><style>
 :root{--maroon:#6b1830;--gold:#c9a45c;--ink:#28232a;--muted:#716b70;--bg:#f7f3f4}*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:var(--bg);color:var(--ink);max-width:900px;margin:0 auto;padding:16px}.brand{text-align:center;background:linear-gradient(135deg,#541226,#7c2942);color:white;border-radius:18px;padding:22px 16px;margin-bottom:16px}.logos{display:flex;justify-content:center;align-items:center;gap:18px;margin-bottom:12px;flex-wrap:wrap}.logo{width:82px;height:82px;object-fit:contain;background:#fff;border:2px solid #e2c98f;border-radius:12px;padding:6px}.brand h1{font-size:22px;margin:8px 0}.brand p{margin:5px 0;color:#f2e7e9}.card{background:white;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 3px 14px #32101a12}h2{font-size:18px;color:var(--maroon);margin:0 0 12px}button{border:0;border-radius:9px;background:var(--maroon);color:white;padding:12px 15px;font-size:15px;font-weight:600;cursor:pointer;margin:5px 4px 5px 0}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:#eee7e9;color:var(--maroon)}.green{background:#18794e}.gold{background:#a87822}.row{display:flex;gap:8px;flex-wrap:wrap}.row button{flex:1}label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}input,select{width:100%;padding:12px;border:1px solid #d8cdd1;border-radius:8px;font-size:16px}.status{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f1f2;border-radius:9px;padding:13px;margin-top:10px;font-size:14px;line-height:1.5}.pill{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#f8e9e9;color:#a32332}.paid{background:#e4f4eb;color:#176b42}.amount{font-size:28px;color:var(--maroon);font-weight:bold}.upi{font-size:19px;font-weight:bold;color:var(--maroon)}.payqr{display:block;width:170px;height:170px;object-fit:contain;margin:12px auto}.hint{font-size:12px;color:var(--muted);line-height:1.5}.hidden{display:none!important}.details p{margin:7px 0;font-size:14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.metric{background:#f8f2f4;padding:13px;border-radius:10px}.metric b{display:block;font-size:24px;color:var(--maroon)}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px;border-bottom:1px solid #eee;text-align:left}#reader{width:100%;max-width:440px;margin:auto;min-height:20px}
-
 .public-note{text-align:center;color:var(--muted);font-size:12px;margin:18px 0}.brand h1{letter-spacing:.3px}
 /* Basic copy deterrence only; not a security boundary. */
 html, body, body * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 input, textarea, select, [contenteditable="true"] { -webkit-user-select: text !important; user-select: text !important; -webkit-touch-callout: default; }
 </style></head><body>
 <header class="brand"><div class="logos"><img class="logo" src="alumni-logo.png" alt="Alumni logo"><img class="logo" src="newphoria-logo.png" alt="Newphoria logo"></div><h1>NEW COLLEGE ALUMNI ASSOCIATION</h1><p>NEWPHORIA 2026</p><p>28 November 2026</p></header>
-<section class="card"><h2>Alumni Registration</h2><p class="hint">Registration fee ₹200 · UPI ID ncaa@iob. Payment is subject to staff verification.</p><div class="grid"><div><label>Full name *</label><input id="regName"></div><div><label>Email address *</label><input id="regEmail" type="email"></div><div><label>Mobile number *</label><input id="regMobile" inputmode="tel"></div><div><label>Year of completion *</label><input id="regYear"></div><div><label>Course *</label><input id="regCourse"></div></div>
-<label>Currently studying?</label><select id="studying" onchange="toggleField('studying','studyDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="studyDetailsWrap" class="hidden"><label>Course / Institution</label><input id="studyDetails"></div>
-<label>Employed / retired?</label><select id="employment" onchange="toggleField('employment','occupation')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="occupationWrap" class="hidden"><label>Present occupation</label><input id="occupation"></div>
-<label>Engaged in business?</label><select id="business" onchange="toggleField('business','businessDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="businessDetailsWrap" class="hidden"><label>Business details</label><input id="businessDetails"></div>
-<label>Self-employed?</label><select id="selfEmployed" onchange="toggleField('selfEmployed','selfEmploymentDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="selfEmploymentDetailsWrap" class="hidden"><label>Self-employment details</label><input id="selfEmploymentDetails"></div>
-<label>UPI transaction reference (optional)</label><input id="regReference"><button class="gold" onclick="payUpi()">Pay ₹200 using UPI</button><button onclick="registerAlumni()">Submit Registration</button><div id="regStatus" class="status">Complete your details and submit.</div></section>
+<section class="card"><h2>Alumni Registration</h2><p class="hint">Registration fee ₹200 · UPI ID ncaa@iob. Payment is subject to staff verification. All fields marked * are compulsory. UPI transaction reference is optional.</p>
+<form id="registrationForm" onsubmit="event.preventDefault();registerAlumni();" novalidate>
+<div class="grid"><div><label for="regName">Full name *</label><input id="regName" name="name" autocomplete="name" required></div><div><label for="regEmail">Email address *</label><input id="regEmail" name="email" type="email" autocomplete="email" required></div><div><label for="regMobile">Mobile number *</label><input id="regMobile" name="mobile" type="tel" inputmode="tel" autocomplete="tel" required></div><div><label for="regYear">Year of completion *</label><input id="regYear" name="year" inputmode="numeric" required></div><div><label for="regCourse">Course *</label><input id="regCourse" name="course" required></div></div>
+<label for="studying">Currently studying? *</label><select id="studying" name="studying" required onchange="toggleField('studying','studyDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="studyDetailsWrap" class="hidden"><label for="studyDetails">Course / Institution *</label><input id="studyDetails" name="studyDetails" disabled></div>
+<label for="employment">Employed / retired? *</label><select id="employment" name="employment" required onchange="toggleField('employment','occupation')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="occupationWrap" class="hidden"><label for="occupation">Present occupation *</label><input id="occupation" name="occupation" disabled></div>
+<label for="business">Engaged in business? *</label><select id="business" name="business" required onchange="toggleField('business','businessDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="businessDetailsWrap" class="hidden"><label for="businessDetails">Business details *</label><input id="businessDetails" name="businessDetails" disabled></div>
+<label for="selfEmployed">Self-employed? *</label><select id="selfEmployed" name="selfEmployed" required onchange="toggleField('selfEmployed','selfEmploymentDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="selfEmploymentDetailsWrap" class="hidden"><label for="selfEmploymentDetails">Self-employment details *</label><input id="selfEmploymentDetails" name="selfEmploymentDetails" disabled></div>
+<label for="regReference">UPI transaction reference (optional)</label><input id="regReference" name="reference" autocomplete="off"><button type="button" class="gold" onclick="payUpi()">Pay ₹200 using UPI</button><button id="submitRegistration" type="submit">Submit Registration</button></form><div id="regStatus" class="status" role="status" aria-live="polite">Complete all compulsory details and submit. UPI reference is optional.</div></section>
 
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbywz8qKlbYMhJSmReuPYzV_trUIQzFGJNLh6mRnvz-M2w8u1QS9r7_vQqd8Jf461S2nTg/exec';
@@ -21,10 +22,30 @@ let sessionToken="";
 const $=id=>document.getElementById(id);
 function api(action,params={}){return new Promise((resolve,reject)=>{const cb='np_'+Date.now()+'_'+Math.random().toString(36).slice(2);const s=document.createElement('script');let done=false;const timer=setTimeout(()=>finish(new Error('Apps Script request timed out. Check deployment URL and access.')),20000);function finish(err,data){if(done)return;done=true;clearTimeout(timer);delete window[cb];s.remove();err?reject(err):resolve(data);}window[cb]=d=>finish(null,d);s.onerror=()=>finish(new Error('Cannot reach Apps Script. Verify the /exec URL and deployment access.'));const q=new URLSearchParams({action,callback:cb,...params});s.src=API_URL+'?'+q.toString();document.body.appendChild(s);});}
 
-function toggleField(sel,field){$(field+'Wrap').classList.toggle('hidden',$(sel).value!=='Yes');}
+function toggleField(sel,field){
+  const show=$(sel).value==='Yes';
+  const wrap=$(field+'Wrap');
+  const input=$(field);
+  wrap.classList.toggle('hidden',!show);
+  input.disabled=!show;
+  input.required=show;
+  if(!show) input.value='';
+}
 function payUpi(){location.href='upi://pay?pa=ncaa@iob&am=200&cu=INR&tn=NEWPHORIA%202026%20Registration';}
-async function registerAlumni(){const payload={name:$('regName').value,email:$('regEmail').value,mobile:$('regMobile').value,year:$('regYear').value,course:$('regCourse').value,studying:$('studying').value,studyDetails:$('studyDetails').value,employment:$('employment').value,occupation:$('occupation').value,business:$('business').value,businessDetails:$('businessDetails').value,selfEmployed:$('selfEmployed').value,selfEmploymentDetails:$('selfEmploymentDetails').value,reference:$('regReference').value};$('regStatus').textContent='Submitting registration...';try{const r=await api('register',{payload:JSON.stringify(payload)});$('regStatus').textContent=r.message+(r.id?'\nAlumni ID: '+r.id:'');}catch(e){$('regStatus').textContent=e.message;}}
-
+async function registerAlumni(){
+  const form=$('registrationForm');
+  if(!form.reportValidity()){
+    $('regStatus').textContent='Please complete all compulsory fields. UPI transaction reference is optional.';
+    const firstInvalid=form.querySelector(':invalid');
+    if(firstInvalid) firstInvalid.focus();
+    return;
+  }
+  const payload={name:$('regName').value.trim(),email:$('regEmail').value.trim(),mobile:$('regMobile').value.trim(),year:$('regYear').value.trim(),course:$('regCourse').value.trim(),studying:$('studying').value,studyDetails:$('studyDetails').value.trim(),employment:$('employment').value,occupation:$('occupation').value.trim(),business:$('business').value,businessDetails:$('businessDetails').value.trim(),selfEmployed:$('selfEmployed').value,selfEmploymentDetails:$('selfEmploymentDetails').value.trim(),reference:$('regReference').value.trim()};
+  const submit=$('submitRegistration');submit.disabled=true;submit.textContent='Submitting...';$('regStatus').textContent='Submitting registration...';
+  try{const r=await api('register',{payload:JSON.stringify(payload)});$('regStatus').textContent=(r.message||'Registration request completed.')+(r.id?'\nAlumni ID: '+r.id:'');if(r.ok){form.reset();['studyDetails','occupation','businessDetails','selfEmploymentDetails'].forEach(id=>{const f=$(id);f.disabled=true;f.required=false;$(id+'Wrap').classList.add('hidden');});}}
+  catch(e){$('regStatus').textContent=e.message;}
+  finally{submit.disabled=false;submit.textContent='Submit Registration';}
+}
 </script><script>
 /* Basic inspection deterrence only. Browser source/devtools remain accessible. */
 (function(){
