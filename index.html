@@ -15,6 +15,19 @@ input, textarea, select, [contenteditable="true"] { -webkit-user-select: text !i
 <label for="business">Engaged in business? *</label><select id="business" name="business" required onchange="toggleField('business','businessDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="businessDetailsWrap" class="hidden"><label for="businessDetails">Business details *</label><input id="businessDetails" name="businessDetails" disabled></div>
 <label for="selfEmployed">Self-employed? *</label><select id="selfEmployed" name="selfEmployed" required onchange="toggleField('selfEmployed','selfEmploymentDetails')"><option value="">Select</option><option>Yes</option><option>No</option></select><div id="selfEmploymentDetailsWrap" class="hidden"><label for="selfEmploymentDetails">Self-employment details *</label><input id="selfEmploymentDetails" name="selfEmploymentDetails" disabled></div>
 <div class="reference-payment" style="display:flex;align-items:flex-end;gap:12px;margin:12px 0"><div style="flex:1;min-width:0"><label for="regReference">UPI transaction reference</label><input id="regReference" name="reference" autocomplete="off"></div><div style="flex:0 0 76px;text-align:center"><img src="upi-payment-200.png" alt="UPI payment QR code" style="display:block;width:76px;height:76px;object-fit:contain;border:1px solid #e5dce0;border-radius:6px;background:#fff;padding:3px"><span class="hint" style="font-size:10px">Scan to pay ₹200</span></div></div><button id="submitRegistration" type="submit">Submit Registration</button></form><div id="regStatus" class="status" role="status" aria-live="polite">Complete all compulsory details and submit.</div></section>
+<section id="quizSection" class="card hidden">
+<h2>NEWPHORIA Alumni Quiz</h2>
+<p class="hint">Take a fun 10-question quiz about The New College. Each correct answer earns 10 marks. Your quiz score does not affect your registration, payment verification or QR pass.</p>
+<div id="quizProgress" class="pill">Question 1 of 10</div>
+<div id="quizQuestion" style="font-size:17px;font-weight:bold;margin:16px 0 10px"></div>
+<div id="quizOptions" class="grid"></div>
+<div class="row" style="margin-top:16px"><button type="button" id="quizNext" onclick="nextQuizQuestion()">Next</button></div>
+<div id="quizStatus" class="status" aria-live="polite"></div>
+</section>
+<section id="quizResult" class="card hidden">
+<h2>Your NEWPHORIA Quiz Result</h2><div id="quizScore" class="amount"></div><p id="quizMessage"></p>
+<div class="status" style="text-align:center"><strong>We are eager to see you at NEWPHORIA 2026!</strong><br>28 November 2026<br>The New College, Chennai</div>
+</section>
 
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbywz8qKlbYMhJSmReuPYzV_trUIQzFGJNLh6mRnvz-M2w8u1QS9r7_vQqd8Jf461S2nTg/exec';
@@ -41,9 +54,35 @@ async function registerAlumni(){
   }
   const payload={name:$('regName').value.trim(),email:$('regEmail').value.trim(),mobile:$('regMobile').value.trim(),year:$('regYear').value.trim(),course:$('regCourse').value.trim(),studying:$('studying').value,studyDetails:$('studyDetails').value.trim(),employment:$('employment').value,occupation:$('occupation').value.trim(),business:$('business').value,businessDetails:$('businessDetails').value.trim(),selfEmployed:$('selfEmployed').value,selfEmploymentDetails:$('selfEmploymentDetails').value.trim(),reference:$('regReference').value.trim()};
   const submit=$('submitRegistration');submit.disabled=true;submit.textContent='Submitting...';$('regStatus').textContent='Submitting registration...';
-  try{const r=await api('register',{payload:JSON.stringify(payload)});$('regStatus').textContent=(r.message||'Registration request completed.')+(r.id?'\nAlumni ID: '+r.id:'');if(r.ok){form.reset();['studyDetails','occupation','businessDetails','selfEmploymentDetails'].forEach(id=>{const f=$(id);f.disabled=true;f.required=false;$(id+'Wrap').classList.add('hidden');});}}
+  try{const r=await api('register',{payload:JSON.stringify(payload)});$('regStatus').textContent=(r.message||'Registration request completed.')+(r.id?'\nAlumni ID: '+r.id:'');if(r.ok){form.reset();['studyDetails','occupation','businessDetails','selfEmploymentDetails'].forEach(id=>{const f=$(id);f.disabled=true;f.required=false;$(id+'Wrap').classList.add('hidden');});startQuiz(r.id);}}
   catch(e){$('regStatus').textContent=e.message;}
   finally{submit.disabled=false;submit.textContent='Submit Registration';}
+}
+
+const QUIZ_BANK=[{"id":1,"q":"In which year was The New College established?","options":["1949","1951","1953","1955"],"answer":1},{"id":2,"q":"Which organisation established The New College?","options":["University of Madras","Government of Tamil Nadu","AICTE","MEASI"],"answer":3},{"id":4,"q":"The New College is affiliated to which university?","options":["Anna University","Bharathiar University","University of Madras","Bharathidasan University"],"answer":2},{"id":5,"q":"In which year was autonomous status granted?","options":["2005","2006","2007","2010"],"answer":2},{"id":6,"q":"What is the NAAC grade of The New College?","options":["A","A+","B++","A++"],"answer":3},{"id":7,"q":"What was the NAAC CGPA in the fourth cycle?","options":["3.25","3.41","3.61","3.75"],"answer":2},{"id":9,"q":"How many undergraduate programmes are offered?","options":["21","24","27","30"],"answer":2},{"id":10,"q":"How many postgraduate programmes are offered?","options":["10","12","15","18"],"answer":2},{"id":11,"q":"What is the combined number of UG and PG programmes?","options":["38","40","42","45"],"answer":2},{"id":12,"q":"Which description applies to The New College?","options":["Government-aided","Autonomous","Affiliated to the University of Madras","All of the above"],"answer":3},{"id":13,"q":"How many members are registered on the Alumni Portal?","options":["10,250","11,450","12,450","14,250"],"answer":2},{"id":14,"q":"How many computers are available on campus?","options":["100–200","200–300","300–400","500–600"],"answer":3},{"id":16,"q":"Who inaugurated The New College on 2 July 1951?","options":["Dr. Rajendra Prasad","C. Rajagopalachari","K. Kamaraj","A. Lakshmanaswamy Mudaliar"],"answer":1},{"id":17,"q":"Who was the first Principal of The New College?","options":["Professor J. Franco","K. Altaff","Sultan Ahmed Ismail","M. Asrar Sheriff"],"answer":0},{"id":18,"q":"What are the five elements of the 5E framework?","options":["Elevate, Educate, Empower, Engage, Excel","Explore, Examine, Evaluate, Employ, Establish","Educate, Examine, Employ, Expand, Enrich","Enable, Examine, Enrich, Encourage, Experience"],"answer":0},{"id":19,"q":"Which of the following is a core value of The New College?","options":["Inclusivity","Student-centredness","Excellence","All of the above"],"answer":3},{"id":20,"q":"How many departments are recognised as PhD research departments?","options":["8","9","11","15"],"answer":2},{"id":23,"q":"How many books are there in the Central Library?","options":["75,000","100,000","129,281","200,000"],"answer":2},{"id":26,"q":"How many faculty members are there at The New College?","options":["100–200","200–300","300–350","350–400"],"answer":2}];
+let quizQuestions=[],quizIndex=0,quizAnswers={},quizAlumniId='';
+function shuffleArray(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+function startQuiz(alumniId){
+  quizAlumniId=alumniId;quizIndex=0;quizAnswers={};
+  quizQuestions=shuffleArray(QUIZ_BANK).slice(0,10).map(q=>{const opts=shuffleArray(q.options.map((text,index)=>({text,index})));return {...q,shuffledOptions:opts};});
+  $('quizSection').classList.remove('hidden');$('quizResult').classList.add('hidden');$('quizStatus').textContent='Select one answer and continue.';
+  $('quizSection').scrollIntoView({behavior:'smooth',block:'start'});renderQuizQuestion();
+}
+function renderQuizQuestion(){
+ const q=quizQuestions[quizIndex];$('quizProgress').textContent='Question '+(quizIndex+1)+' of 10';$('quizQuestion').textContent=q.q;
+ $('quizOptions').innerHTML='';
+ q.shuffledOptions.forEach((opt,i)=>{const label=document.createElement('label');label.style.cssText='display:flex;gap:9px;align-items:center;border:1px solid #e4d9dd;border-radius:9px;padding:12px;font-weight:normal;margin:0;cursor:pointer';const radio=document.createElement('input');radio.type='radio';radio.name='quizAnswer';radio.value=String(opt.index);radio.style.cssText='width:auto;margin:0';if(quizAnswers[q.id]===opt.index)radio.checked=true;label.appendChild(radio);const span=document.createElement('span');span.textContent=String.fromCharCode(65+i)+') '+opt.text;label.appendChild(span);$('quizOptions').appendChild(label);});
+ $('quizNext').textContent=quizIndex===9?'Submit Quiz':'Next';
+}
+async function nextQuizQuestion(){
+ const selected=document.querySelector('input[name="quizAnswer"]:checked');if(!selected){$('quizStatus').textContent='Please select an answer to continue.';return;}
+ const q=quizQuestions[quizIndex];quizAnswers[q.id]=Number(selected.value);$('quizStatus').textContent='';
+ if(quizIndex<9){quizIndex++;renderQuizQuestion();return;}
+ const btn=$('quizNext');btn.disabled=true;btn.textContent='Submitting...';
+ const answers=quizQuestions.map(q=>({id:q.id,selected:quizAnswers[q.id]}));
+ try{const result=await api('quizResult',{alumniId:quizAlumniId,answers:JSON.stringify(answers)});if(!result.ok)throw new Error(result.message||'Unable to save quiz result.');$('quizSection').classList.add('hidden');$('quizResult').classList.remove('hidden');$('quizScore').textContent=result.score+' / 100 ('+result.percentage+'%)';$('quizMessage').textContent=result.correct+' correct answers out of 10. Thank you for participating!';$('quizResult').scrollIntoView({behavior:'smooth',block:'start'});}
+ catch(e){$('quizStatus').textContent='Could not save your result: '+e.message+' Please try submitting again.';}
+ finally{btn.disabled=false;btn.textContent='Submit Quiz';}
 }
 </script><script>
 /* Basic inspection deterrence only. Browser source/devtools remain accessible. */
